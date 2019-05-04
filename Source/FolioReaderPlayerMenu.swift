@@ -129,6 +129,10 @@ class FolioReaderPlayerMenu: UIViewController, SMSegmentViewDelegate, UIGestureR
         playbackRate.addSegmentWithTitle("2x", onSelectionImage: nil, offSelectionImage: nil)
         playbackRate.segmentTitleFont = UIFont(name: "Avenir-Light", size: 17)!
         playbackRate.selectSegmentAtIndex(Int(self.folioReader.currentAudioRate))
+        let playBackVoiceText = ["2 kat yavaşlat","1 kat hızlandır","Bir buçuk kat hızlandır","2 kat hızlandır"]
+        for segment in playbackRate.segments {
+            segment.label.accessibilityLabel = playBackVoiceText[segment.index]
+        }
         menuView.addSubview(playbackRate)
 
 
@@ -145,6 +149,8 @@ class FolioReaderPlayerMenu: UIViewController, SMSegmentViewDelegate, UIGestureR
         style0.setTitleColor(self.folioReader.isNight(self.readerConfig.nightModeMenuBackground, UIColor.white), for: UIControl.State())
         style0.setTitleColor(self.folioReader.isNight(self.readerConfig.nightModeMenuBackground, UIColor.white), for: .selected)
         style0.setTitle(self.readerConfig.localizedPlayerMenuStyle, for: UIControl.State())
+        style0.accessibilityLabel = "Stil 1'i Seç"
+
         menuView.addSubview(style0);
         style0.titleLabel?.sizeToFit()
         let style0Bgd = UIView(frame: style0.titleLabel!.frame)
@@ -170,6 +176,8 @@ class FolioReaderPlayerMenu: UIViewController, SMSegmentViewDelegate, UIGestureR
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.patternDot.rawValue|NSUnderlineStyle.single.rawValue,
             NSAttributedString.Key.underlineColor: selectedColor
             ]), for: .selected)
+       style1.accessibilityLabel = "Stil 2'i Seç"
+
         menuView.addSubview(style1);
 
         let style2 = UIButton(frame: CGRect(x: view.frame.width/1.5, y: line2.frame.height+line2.frame.origin.y, width: view.frame.width/3, height: 55))
@@ -178,6 +186,8 @@ class FolioReaderPlayerMenu: UIViewController, SMSegmentViewDelegate, UIGestureR
         style2.setTitleColor(normalColor, for: UIControl.State())
         style2.setTitleColor(selectedColor, for: .selected)
         style2.setTitle(self.readerConfig.localizedPlayerMenuStyle, for: UIControl.State())
+        style2.accessibilityLabel = "Stil 3'ü Seç"
+
         menuView.addSubview(style2);
 
         // add line dividers between style buttons
@@ -248,6 +258,11 @@ class FolioReaderPlayerMenu: UIViewController, SMSegmentViewDelegate, UIGestureR
     }
 
     @objc func togglePlay(_ sender: UIButton!) {
+        if sender.isSelected {
+            sender.accessibilityLabel = "Duraklat"
+        }else{
+            sender.accessibilityLabel = "Oynat"
+        }
         sender.isSelected = sender.isSelected != true
         self.folioReader.readerAudioPlayer?.togglePlay()
         closeView()
