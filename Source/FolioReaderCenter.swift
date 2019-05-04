@@ -268,21 +268,29 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
         let space = 70 as CGFloat
 
         let menu = UIBarButtonItem(image: closeIcon, style: .plain, target: self, action:#selector(closeReader(_:)))
+        menu.accessibilityLabel = "E-kitap okuyucuyu kapat"
         let toc = UIBarButtonItem(image: tocIcon, style: .plain, target: self, action:#selector(presentChapterList(_:)))
-
+        toc.accessibilityLabel = "Bölüm listesini aç"
+        
         navigationItem.leftBarButtonItems = [menu, toc]
 
         var rightBarIcons = [UIBarButtonItem]()
 
         if (self.readerConfig.allowSharing == true) {
-            rightBarIcons.append(UIBarButtonItem(image: shareIcon, style: .plain, target: self, action:#selector(shareChapter(_:))))
+            let shareButton = UIBarButtonItem(image: shareIcon, style: .plain, target: self, action:#selector(shareChapter(_:)))
+            shareButton.accessibilityLabel = "İlgili Bölümü Paylaş"
+            rightBarIcons.append(shareButton)
         }
 
-        if self.book.hasAudio || self.readerConfig.enableTTS {
-            rightBarIcons.append(UIBarButtonItem(image: audioIcon, style: .plain, target: self, action:#selector(presentPlayerMenu(_:))))
+         if (self.book.hasAudio() == true || self.readerConfig.enableTTS == true) {
+            let voicePlayerButton = UIBarButtonItem(image: audioIcon, style: .plain, target: self, action:#selector(presentPlayerMenu(_:)))
+            voicePlayerButton.accessibilityLabel = "Sesli Okumayı Başlat"
+            rightBarIcons.append(voicePlayerButton)
         }
 
         let font = UIBarButtonItem(image: fontIcon, style: .plain, target: self, action: #selector(presentFontsMenu))
+        font.accessibilityLabel = "Fontu Değiştir"
+
         font.width = space
 
         rightBarIcons.append(contentsOf: [font])
