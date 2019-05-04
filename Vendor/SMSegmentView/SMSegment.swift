@@ -127,7 +127,7 @@ class SMSegment: UIView {
         }
     }
     fileprivate var imageView: UIImageView = UIImageView()
-    fileprivate var label: UILabel = UILabel()
+    var label: UILabel = UILabel()
     fileprivate var labelWidth: CGFloat = 0.0
     
     required init?(coder aDecoder: NSCoder) {
