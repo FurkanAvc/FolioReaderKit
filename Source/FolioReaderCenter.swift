@@ -282,7 +282,7 @@ open class FolioReaderCenter: UIViewController, UICollectionViewDelegate, UIColl
             rightBarIcons.append(shareButton)
         }
 
-         if (self.book.hasAudio() == true || self.readerConfig.enableTTS == true) {
+         if (self.book.hasAudio == true || self.readerConfig.enableTTS == true) {
             let voicePlayerButton = UIBarButtonItem(image: audioIcon, style: .plain, target: self, action:#selector(presentPlayerMenu(_:)))
             voicePlayerButton.accessibilityLabel = "Sesli Okumayı Başlat"
             rightBarIcons.append(voicePlayerButton)
